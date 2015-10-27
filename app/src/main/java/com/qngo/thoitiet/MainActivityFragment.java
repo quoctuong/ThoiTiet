@@ -1,8 +1,11 @@
 package com.qngo.thoitiet;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,13 @@ import java.util.List;
 public class MainActivityFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Allow this fragment handle the menu event
+        setHasOptionsMenu(true);
+    }
 
     public MainActivityFragment() {
     }
@@ -52,5 +62,24 @@ public class MainActivityFragment extends Fragment {
         listView.setAdapter(mForecastAdapter);
 
         return viewFragment;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.forecastfragment,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                FetchWeatherTast weatherTast = new FetchWeatherTast();
+                weatherTast.execute("Massy");
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
