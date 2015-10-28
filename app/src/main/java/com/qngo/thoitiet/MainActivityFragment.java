@@ -8,8 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +63,14 @@ public class MainActivityFragment extends Fragment {
 
         mListView = (ListView) viewFragment.findViewById(R.id.lv_forecast);
         mListView.setAdapter(mForecastAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strForecast = mForecastAdapter.getItem(position);
+                Toast.makeText(getActivity(),strForecast,Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return viewFragment;
     }
