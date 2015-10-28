@@ -21,6 +21,7 @@ import java.util.List;
 public class MainActivityFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
+    private ListView mListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,8 @@ public class MainActivityFragment extends Fragment {
                 // Data
                 listWeekForecast);
 
-        ListView listView = (ListView) viewFragment.findViewById(R.id.lv_forecast);
-        listView.setAdapter(mForecastAdapter);
+        mListView = (ListView) viewFragment.findViewById(R.id.lv_forecast);
+        mListView.setAdapter(mForecastAdapter);
 
         return viewFragment;
     }
@@ -74,8 +75,8 @@ public class MainActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                FetchWeatherTast weatherTast = new FetchWeatherTast();
-                weatherTast.execute("Massy");
+                FetchWeatherTask weatherTask = new FetchWeatherTask(mListView,mForecastAdapter);
+                weatherTask.execute("Massy");
                 return true;
             default:
                 break;
